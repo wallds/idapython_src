@@ -162,8 +162,11 @@ class Choose(object):
         self.forbidden_cb = forbidden_cb
         self.ui_hooks_trampoline = None # set on Show
         def _qccb(ctx, cmd_id):
+            ret = 0
             for idx in ctx.chooser_selection:
-                self.OnCommand(idx, cmd_id)
+                if self.OnCommand(idx, cmd_id):
+                    ret |= 1
+            return ret
         self._quick_commands = quick_widget_commands_t(_qccb)
 
 
@@ -277,6 +280,9 @@ class Choose(object):
 
     def OnPopup(self, widget, popup_handle):
         self._quick_commands.populate_popup(widget, popup_handle)
+
+    def OnCommand(self, n, cmd_id):
+        return 0
 
     def OnInit(self):
         """

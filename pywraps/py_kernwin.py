@@ -84,7 +84,7 @@ class quick_widget_commands_t:
             self.cmd_id = cmd_id
 
         def activate(self, ctx):
-            self.parent.callback(ctx, self.cmd_id)
+            return self.parent.callback(ctx, self.cmd_id)
 
         def update(self, ctx):
             return AST_ENABLE_ALWAYS
